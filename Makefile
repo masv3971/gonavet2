@@ -21,7 +21,7 @@ test:
 git-status:
 	$(info files to be added:)
 	@git status
-	read -p "Press enter in order to precede"
+	$(read -p "Press enter in order to precede")
 
 add: git-status
 	git add .
