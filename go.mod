@@ -1,4 +1,4 @@
-module gonavet2
+module github.com/masv3971/gonavet2
 
 go 1.18
 
