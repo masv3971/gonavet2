@@ -1,9 +1,15 @@
 package navettypes
 
+type SKVContext string
+
+type SimpleAPIError struct {
+	Message string `json:"message"`
+}
+
 // HamtaRequest 5.1.2.1
 type HamtaRequest struct {
-	Bestallning Bestallning  `json:"bestallning" validate:"required"`
-	Sokvillkor  []Sokvillkor `json:"sokvillkor" validate:"min=1"`
+	Bestallning Bestallning            `json:"bestallning" validate:"required"`
+	Sokvillkor  []Sokvillkorsidentitet `json:"sokvillkor" validate:"min=1"`
 }
 
 // OkHamtaResponse 5.1.2.2
@@ -207,14 +213,7 @@ type Kontaktadress struct {
 }
 
 // KontaktAdressSverige 9.1.1.24
-type KontaktAdressSverige struct {
-	Adressfortsattning string `json:"adressfortsattning" validate:"omitempty"`
-	CareOf             string `json:"careOf" validate:"omitempty"`
-	Gatuadress         string `json:"gatuadress" validate:"omitempty"`
-	Postnummer         string `json:"postnummer" validate:"required"`
-	Postort            string `json:"postort" validate:"omitempty"`
-	Typ                string `json:"Typ" validate:"omitempty,oneof=FOLKBOKFORINGSADRESS SARSKILD_POSTADRESS"`
-}
+// intentionally left empty
 
 // KontaktAdressUtland 9.1.1.25
 type KontaktAdressUtland struct {
@@ -422,7 +421,15 @@ type FolkbokforingspostSokKontaktadress struct {
 	Svensk KontaktAdressSverige `json:"svensk" validate:"required"`
 }
 
-// FolkbokforingsPostSokKontaktadress 9.1.2.17 already exists
+// KontaktAdressSverige 9.1.2.17
+type KontaktAdressSverige struct {
+	Adressfortsattning string `json:"adressfortsattning" validate:"omitempty, max=35"`
+	CareOf             string `json:"careOf" validate:"omitempty, max=35"`
+	Gatuadress         string `json:"gatuadress" validate:"omitempty, max=35"`
+	Postnummer         string `json:"postnummer" validate:"required, max=5"`
+	Postort            string `json:"postort" validate:"omitempty, max=27"`
+	Typ                string `json:"typ" validate:"omitempty, oneof=FOLKBOKFORINGSADRESS SARSKILD_POSTADRESS"`
+}
 
 // NamnSokresultat 9.1.2.18
 type NamnSokresultat struct {
